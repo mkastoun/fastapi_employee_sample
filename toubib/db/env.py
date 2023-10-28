@@ -4,7 +4,8 @@ import os
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
-from sqlalchemy.ext.declarative import declarative_base
+from sqlmodel import SQLModel
+from toubib.app.patients.models import Patient
 
 config = context.config
 
@@ -13,10 +14,10 @@ if config.config_file_name:
 else:
     logging.basicConfig(level=logging.DEBUG)
 
-target_metadata = declarative_base().metadata
+target_metadata = SQLModel.metadata
 
 if config.get_main_option("sqlalchemy.url") is None:
-    config.set_main_option("sqlalchemy.url", os.environ["sqlalchemy_url"])
+    config.set_main_option("sqlalchemy.url", os.getenv("DB_CONNECTION_STR"))
 
 
 def run_migrations_online():
@@ -24,6 +25,11 @@ def run_migrations_online():
     In this scenario we need to create an Engine
     and associate a connection with the context.
     """
+
+    config_section = config.get_section(config.config_ini_section)
+    url = os.getenv("DB_CONNECTION_STR")
+    config_section["sqlalchemy.url"] = url
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",

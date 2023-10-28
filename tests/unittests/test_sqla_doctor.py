@@ -1,5 +1,5 @@
 def test_add_doctor(session, faker):
-    from toubib.sqla import Doctor
+    from toubib import Doctor
 
     doctor = Doctor(
         first_name=faker.first_name(),

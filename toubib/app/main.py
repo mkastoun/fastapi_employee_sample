@@ -1,3 +1,4 @@
+import uvicorn
 from datetime import date
 from importlib.metadata import version
 
@@ -6,20 +7,30 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi_sqla import Item, Session
 from pydantic import BaseModel
 from structlog import get_logger
+from toubib.app import settings
 
-from .sqla import Doctor
+from toubib.sqla import Doctor
+from toubib.app.core.models import HealthCheck
 
 log = get_logger()
 
-app = FastAPI(title="toubib", version=version("toubib"))
+app = FastAPI(
+    title=settings.project_name,
+    version=settings.version,
+    openapi_url=f"{settings.api_v1_prefix}/openapi.json",
+    debug=settings.debug
+)
 
 fastapi_sqla.setup(app)
 
 
-@app.get("/health")
+@app.get("/health", response_model=HealthCheck, tags=["status"])
 def health():
-    "Return OK if app is reachable"
-    return "OK"
+    return {
+        "name": settings.project_name,
+        "version": settings.version,
+        "description": settings.description
+    }
 
 
 class DoctorIn(BaseModel):
@@ -65,3 +76,6 @@ def create_patient():
 @app.get("/v1/patients/{patient_id}")
 def get_patient():
     pass
+
+if __name__ == '__main__':
+   uvicorn.run("main:app", port=8080, host="0.0.0.0", reload=True)

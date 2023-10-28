@@ -3,7 +3,7 @@ from pytest import fixture
 
 @fixture
 def doctor_no(faker, session):
-    from toubib.sqla import Doctor
+    from toubib import Doctor
 
     doctor = Doctor(
         first_name=faker.first_name(),

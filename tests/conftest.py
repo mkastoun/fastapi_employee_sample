@@ -26,7 +26,7 @@ def sqla_modules():
 
 @fixture
 async def app():
-    from toubib.main import app
+    from toubib import app
 
     async with LifespanManager(app):
         yield app
