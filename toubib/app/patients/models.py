@@ -34,7 +34,6 @@ class PatientBase(SQLModel):
         nullable=False
     )
     date_of_birth: date = Field(
-        default=None,
         nullable=False
     )
     sex_at_birth: str = Field(

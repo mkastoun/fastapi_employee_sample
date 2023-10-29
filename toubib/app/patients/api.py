@@ -2,12 +2,12 @@ import sys
 
 from fastapi import APIRouter, Depends
 from fastapi import status, Query
-from typing import List
 from fastapi_sqla import Item
 
 from toubib.app.patients.service import PatientsService
 from toubib.app.patients.dependencies import get_patients_service
 from toubib.app.patients.models import PatientCreate, PatientDetails, PatientsList
+from toubib.app.patients.request_validator import create_patient_validator
 
 router = APIRouter()
 
@@ -21,6 +21,7 @@ def create_patient(
         data: PatientCreate,
         patients: PatientsService = Depends(get_patients_service)
 ):
+    create_patient_validator(request=data)
     patient = patients.create(data=data)
 
     return {"data": patient}

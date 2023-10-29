@@ -4,8 +4,8 @@ from sqlmodel import Session
 from sqlalchemy import select
 from sqlalchemy import desc
 from toubib.app.patients.models import Patient, PatientCreate, PatientsList
-from sqlalchemy import func
 from toubib.app.core.service import calculate_pagination
+from sqlalchemy.sql import exists
 
 
 class PatientsService:
@@ -13,6 +13,33 @@ class PatientsService:
         self.session = session
 
     def create(self, data: PatientCreate) -> Patient:
+        """
+        Responsible to check if the email already exists, and insert new record to patient
+        Args:
+            data: PatientCreate
+
+        Exceptions:
+            raises an HTTP exception in case the
+        Returns:
+            Patient
+        """
+        email_exists = self.session.query(exists().where(Patient.email == data.email)).scalar()
+
+        if email_exists:
+            raise HTTPException(
+                status_code=http_status.HTTP_409_CONFLICT,
+                detail=[
+                    {
+                        "loc": [
+                            "body",
+                            "email"
+                        ],
+                        "msg": "Email already taken",
+                        "type": "value_error.email"
+                    }
+                ]
+            )
+
         values = data.dict()
 
         patient = Patient(**values)
@@ -24,12 +51,13 @@ class PatientsService:
 
     def get(self, patient_id: int) -> Patient:
         """
-
+        Responsible to return specific patient details by patient id
         Args:
             patient_id:
-
+        Exception:
+            Raises 404 http exception in case patient id not found
         Returns:
-
+            Patient
         """
         statement = select(
             Patient
@@ -43,12 +71,30 @@ class PatientsService:
         if patient is None:
             raise HTTPException(
                 status_code=http_status.HTTP_404_NOT_FOUND,
-                detail="The patient's has not been found"
+                detail=[
+                    {
+                        "loc": [
+                            "route",
+                            "patient_id"
+                        ],
+                        "msg": "patient_id not found",
+                        "type": "value_error.patient_id"
+                    }
+                ]
             )
 
         return patient
 
     def list(self, offset: int, limit: int) -> PatientsList:
+        """
+        Responsible to list all patients based on the offset and limit, with pagination check
+        Args:
+            offset: int
+            limit: int
+
+        Returns:
+            PatientList
+        """
         statement = select(
             Patient
         ).order_by(
