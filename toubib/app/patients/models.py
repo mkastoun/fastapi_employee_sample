@@ -2,12 +2,15 @@ from sqlmodel import Field, SQLModel
 from sqlalchemy import Column, event
 from sqlalchemy.databases import postgres
 from datetime import date
+from typing import List
+from pydantic import BaseModel
 
-from toubib.app.core.models import TimestampModel, IDModel
+from toubib.app.core.models import TimestampModel, IDModel, PaginationModel
 
 gender_types = postgres.ENUM(
     "FEMALE",
-    "MALE"
+    "MALE",
+    name=f"gender_types"
 )
 
 
@@ -53,8 +56,13 @@ class Patient(
 
 
 class PatientDetails(PatientBase, IDModel):
-    ...  # todo add functionality
+    ...
 
 
 class PatientCreate(PatientBase):
-    ...  # todo add functionality
+    ...
+
+
+class PatientsList(BaseModel):
+    data: List[PatientBase]
+    meta: PaginationModel

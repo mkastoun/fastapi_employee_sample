@@ -3,7 +3,7 @@ import logging.config
 import os
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import engine_from_config, pool, create_engine
 from sqlmodel import SQLModel
 from toubib.app.patients.models import Patient
 
@@ -31,7 +31,7 @@ def run_migrations_online():
     config_section["sqlalchemy.url"] = url
 
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        config_section,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
