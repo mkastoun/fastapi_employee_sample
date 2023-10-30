@@ -28,7 +28,7 @@ class PatientsService:
             data: PatientCreate
 
         Exceptions:
-            raises an HTTP exception in case the
+            raises an HTTP exception in case the email already exists
         Returns:
             Patient
         """
@@ -96,7 +96,7 @@ class PatientsService:
 
     def list(self, offset: int, limit: int) -> PatientsList:
         """
-        Responsible to list all patients based on the offset and limit, with pagination check
+        Responsible to list all patients based on the offset and limit, with pagination check order by desc last name
         Args:
             offset: int
             limit: int

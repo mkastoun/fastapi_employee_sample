@@ -80,7 +80,7 @@ def get_patients_list(
     Endpoint Responsible to return all patients with pagination
     Args:
         offset: int skip param
-        limit: int limit of result per patge
+        limit: int limit of result per page
         patients: Dependency injected patientsService
 
     Returns:

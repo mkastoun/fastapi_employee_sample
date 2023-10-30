@@ -1,9 +1,15 @@
-import logging.config
 import os
+import logging.config
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
+from dotenv import load_dotenv
+
+"""
+The loading of the .env to settings on the application initialisation
+"""
+load_dotenv(os.getenv("ENV_FILE"))
 
 config = context.config
 
