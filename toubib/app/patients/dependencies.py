@@ -8,4 +8,12 @@ from toubib.app.patients.service import PatientsService
 def get_patients_service(
         session: Session = Depends(get_session)
 ) -> PatientsService:
+    """
+    Responsible to return patient service
+    Args:
+        session: Session
+
+    Returns:
+        Patient Service
+    """
     return PatientsService(session=session)

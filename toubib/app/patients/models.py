@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from toubib.app.core.models import TimestampModel, IDModel, PaginationModel
 
+# The gender types that a patient can have
 gender_types = postgres.ENUM(
     "FEMALE",
     "MALE",
@@ -16,10 +17,23 @@ gender_types = postgres.ENUM(
 
 @event.listens_for(SQLModel.metadata, "before_create")
 def _create_enums(metadata, conn, **kw):
+    """
+    Responsible to create the enum as a datatype in the db before creating the patient table
+    Args:
+        metadata:
+        conn:
+        **kw:
+
+    Returns:
+
+    """
     gender_types.create(conn, checkfirst=True)
 
 
 class PatientBase(SQLModel):
+    """
+    Patient Model structure
+    """
     email: str = Field(
         max_length=320,
         nullable=False,
@@ -63,5 +77,8 @@ class PatientCreate(PatientBase):
 
 
 class PatientsList(BaseModel):
+    """
+    Response model for list of patients.
+    """
     data: List[PatientBase]
     meta: PaginationModel

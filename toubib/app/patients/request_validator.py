@@ -5,6 +5,16 @@ from fastapi import HTTPException, status
 
 
 def create_patient_validator(request: PatientCreate):
+    """
+    Responsible to validate create patient body request before it reaches the service, to make sure data are as expected.
+    In this way it will avoid reaching the DB unwanted data
+    Args:
+        request: PatientCreate (request body of create patient)
+    Raises:
+        HTTP Exception with 422 unprocessable entity in case any element in the body request contains faulty data
+    Returns:
+
+    """
     regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
     if not re.search(regex, request.email):
         raise HTTPException(

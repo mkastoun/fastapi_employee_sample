@@ -9,7 +9,16 @@ from sqlalchemy.sql import exists
 
 
 class PatientsService:
+    """
+    This contains all the business logic for Patient entities.
+    """
+
     def __init__(self, session: Session):
+        """
+        Init to initialize the session
+        Args:
+            session:
+        """
         self.session = session
 
     def create(self, data: PatientCreate) -> Patient:

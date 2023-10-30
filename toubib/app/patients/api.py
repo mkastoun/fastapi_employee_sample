@@ -1,5 +1,3 @@
-import sys
-
 from fastapi import APIRouter, Depends
 from fastapi import status, Query
 from fastapi_sqla import Item
@@ -11,6 +9,10 @@ from toubib.app.patients.request_validator import create_patient_validator
 
 router = APIRouter()
 
+"""
+This is where the routes of patients entity are located
+"""
+
 
 @router.post(
     "",
@@ -21,7 +23,20 @@ def create_patient(
         data: PatientCreate,
         patients: PatientsService = Depends(get_patients_service)
 ):
+    """
+    Endpoint responsible to create endpoint
+    Args:
+        data: Request body PatientCreate
+        patients: Dependency injected patientsService
+    Raises:
+        HTTP Exception 409 in case Email not found
+        HTTP Exception 422 in case request body element is invalid
+    Returns:
+        JSON response Patient created with the inserted id wrapped in data key
+    """
+    # Validate the create patient request
     create_patient_validator(request=data)
+    # create Patient
     patient = patients.create(data=data)
 
     return {"data": patient}
@@ -36,6 +51,17 @@ def get_patient_by_id(
         patient_id: int,
         patients: PatientsService = Depends(get_patients_service)
 ):
+    """
+    Endpoint responsible to retrieve patient details
+    Args:
+        patient_id: int Patient id
+        patients: Dependency injected patientsService
+    Raises:
+        HTTP Exception 404 in case not found
+    Returns:
+        Json Response of PatientDetails model
+    """
+    # Get patient details
     patient = patients.get(patient_id=patient_id)
 
     return patient
@@ -50,6 +76,16 @@ def get_patients_list(
         offset: int = 0, limit: int = Query(default=10, le=100),
         patients: PatientsService = Depends(get_patients_service)
 ):
+    """
+    Endpoint Responsible to return all patients with pagination
+    Args:
+        offset: int skip param
+        limit: int limit of result per patge
+        patients: Dependency injected patientsService
+
+    Returns:
+        JSON response of PatientsList model
+    """
     patients_list = patients.list(offset, limit)
 
     return patients_list

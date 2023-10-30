@@ -1,5 +1,4 @@
 import uvicorn
-from datetime import date
 
 import fastapi_sqla
 from fastapi import Depends, FastAPI, HTTPException
@@ -26,6 +25,11 @@ fastapi_sqla.setup(app)
 
 @app.get("/health", response_model=HealthCheck, tags=["status"])
 def health():
+    """
+    health endpoint responsible to return the application status check
+    Returns:
+          Returns json response with the name,version and description of the app
+    """
     return {
         "name": settings.project_name,
         "version": settings.version,
@@ -45,8 +49,8 @@ def health():
 #
 #     class Config:
 #         orm_mode = True
-#
-#
+
+
 # @app.post("/v1/doctors", response_model=Item[DoctorModel], status_code=201)
 # def create_doctor(*, body: DoctorIn, session: Session = Depends()):
 #     doctor = Doctor(**body.dict())
@@ -64,6 +68,7 @@ def health():
 
 
 app.include_router(api_router, prefix=settings.api_v1_prefix)
+
 
 # @app.get("/v1/patients")
 # def list_patients():

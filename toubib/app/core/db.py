@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from contextlib import contextmanager
 
 from toubib.app import settings
 
@@ -11,6 +10,11 @@ Base = declarative_base()
 
 
 def get_session():
+    """
+    Responsible to return db session
+    Returns:
+
+    """
     session = SessionLocal()
     try:
         yield session
