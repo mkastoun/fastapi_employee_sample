@@ -1,8 +1,8 @@
 from fastapi import Depends
 from sqlmodel import Session
 
-from toubib.app.core.db import get_session
-from toubib.app.patients.service import PatientsService
+from app.core.db import get_session
+from app.patients.service import PatientsService
 
 
 def get_patients_service(

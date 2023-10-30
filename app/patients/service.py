@@ -3,8 +3,8 @@ from fastapi import status as http_status
 from sqlmodel import Session
 from sqlalchemy import select
 from sqlalchemy import desc
-from toubib.app.patients.models import Patient, PatientCreate, PatientsList
-from toubib.app.core.service import calculate_pagination
+from app.patients.models import Patient, PatientCreate, PatientsList
+from app.core.service import calculate_pagination
 from sqlalchemy.sql import exists
 
 

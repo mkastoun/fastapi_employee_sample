@@ -5,7 +5,7 @@ from datetime import date
 from typing import List
 from pydantic import BaseModel
 
-from toubib.app.core.models import TimestampModel, IDModel, PaginationModel
+from app.core.models import TimestampModel, IDModel, PaginationModel
 
 # The gender types that a patient can have
 gender_types = postgres.ENUM(

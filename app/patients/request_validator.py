@@ -1,6 +1,6 @@
 import re
 from datetime import date
-from toubib.app.patients.models import PatientCreate
+from app.patients.models import PatientCreate
 from fastapi import HTTPException, status
 
 

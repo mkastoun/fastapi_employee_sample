@@ -1,4 +1,4 @@
-from toubib.app.core.models import PaginationModel
+from app.core.models import PaginationModel
 
 """
 Core service where common services and core services can be placed
@@ -17,8 +17,12 @@ def calculate_pagination(offset: int, limit: int, total_count: int) -> Paginatio
     Returns:
         PaginationModel
     """
-    current_page = (offset // limit) + 1
-    total_pages = -(-total_count // limit)
+    if limit == 0 or total_count == 0:
+        current_page = 1
+        total_pages = 0
+    else:
+        current_page = (offset // limit) + 1
+        total_pages = -(-total_count // limit)
 
     pagination_info = {
         "offset": offset,

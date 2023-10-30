@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends
 from fastapi import status, Query
 from fastapi_sqla import Item
 
-from toubib.app.patients.service import PatientsService
-from toubib.app.patients.dependencies import get_patients_service
-from toubib.app.patients.models import PatientCreate, PatientDetails, PatientsList
-from toubib.app.patients.request_validator import create_patient_validator
+from app.patients.service import PatientsService
+from app.patients.dependencies import get_patients_service
+from app.patients.models import PatientCreate, PatientDetails, PatientsList
+from app.patients.request_validator import create_patient_validator
 
 router = APIRouter()
 
@@ -73,7 +73,7 @@ def get_patient_by_id(
     status_code=status.HTTP_200_OK
 )
 def get_patients_list(
-        offset: int = 0, limit: int = Query(default=10, le=100),
+        offset: int = 0, limit: int = Query(default=10, le=100, gt=0),
         patients: PatientsService = Depends(get_patients_service)
 ):
     """

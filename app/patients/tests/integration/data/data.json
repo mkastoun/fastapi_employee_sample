@@ -1,0 +1,56 @@
+{
+  "initial_data": {
+    "patient": {
+      "id": 1,
+      "email": "tracy1@edwards.com",
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "date_of_birth": "1995-09-05",
+      "sex_at_birth": "FEMALE"
+    }
+  },
+  "case_create": {
+    "payload": {
+      "email": "tracy1@edwards.com",
+      "first_name": "Tracy1",
+      "last_name": "Edwards1",
+      "date_of_birth": "1993-09-05",
+      "sex_at_birth": "FEMALE"
+    },
+    "want": {
+      "email": "tracy1@edwards.com",
+      "first_name": "Tracy1",
+      "last_name": "Edwards1",
+      "date_of_birth": "1993-09-05",
+      "sex_at_birth": "FEMALE"
+    }
+  },
+  "case_get": {
+    "want": {
+      "id": 1,
+      "email": "tracy1@edwards.com",
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "date_of_birth": "1995-09-05",
+      "sex_at_birth": "FEMALE"
+    }
+  },
+  "case_create_invalid_email": {
+    "payload": {
+      "email": "Invalid",
+      "first_name": "Tracy1",
+      "last_name": "Edwards1",
+      "date_of_birth": "1993-09-05",
+      "sex_at_birth": "FEMALE"
+    }
+  },
+  "case_create_with_future_dob": {
+    "payload": {
+      "email": "tracy1@edwards.com",
+      "first_name": "Tracy1",
+      "last_name": "Edwards1",
+      "date_of_birth": "2025-09-05",
+      "sex_at_birth": "FEMALE"
+    }
+  }
+}

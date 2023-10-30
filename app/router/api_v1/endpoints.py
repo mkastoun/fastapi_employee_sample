@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from toubib.app.patients.api import router as patients_router
+from app.patients.api import router as patients_router
 
 api_router = APIRouter()
 

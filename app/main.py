@@ -1,15 +1,13 @@
 import uvicorn
 
 import fastapi_sqla
-from fastapi import Depends, FastAPI, HTTPException
-from fastapi_sqla import Item, Session
-from pydantic import BaseModel
+from fastapi import FastAPI
 from structlog import get_logger
-from toubib.app import settings
+from app import settings
 
 # from toubib.sqla import Doctor
-from toubib.app.core.models import HealthCheck
-from toubib.app.router.api_v1.endpoints import api_router
+from app.core.models import HealthCheck
+from app.router.api_v1.endpoints import api_router
 
 log = get_logger()
 

@@ -14,3 +14,4 @@ class Settings(BaseSettings):
 
     # Database
     db_connection_str: str
+    db_test_connection_str: str
