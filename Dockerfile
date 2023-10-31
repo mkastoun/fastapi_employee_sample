@@ -46,7 +46,7 @@ COPY setup.cfg setup.cfg
 COPY alembic.ini alembic.ini
 COPY pytest.ini pytest.ini
 COPY start.sh start.sh
-COPY .env .env
+COPY .env.example .env
 COPY poetry.lock poetry.lock
 COPY pyproject.toml pyproject.toml
 
