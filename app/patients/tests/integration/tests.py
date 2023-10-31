@@ -138,7 +138,7 @@ async def test_get_patient(
     want = test_data["case_get"]["want"]
 
     for k, v in want.items():
-        assert got[k] == v
+        assert got["data"][k] == v
 
 
 async def test_get_not_created_patient(

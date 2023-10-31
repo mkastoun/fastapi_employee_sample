@@ -43,7 +43,7 @@ def create_doctor(
 
 @router.get(
     "/{doctor_id}",
-    response_model=DoctorDetails,
+    response_model=Item[DoctorDetails],
     status_code=status.HTTP_200_OK
 )
 def get_doctor_by_id(
@@ -62,7 +62,7 @@ def get_doctor_by_id(
     """
     doctor = doctors.get(doctor_id=doctor_id)
 
-    return doctor
+    return {"data": doctor}
 
 
 @router.get(

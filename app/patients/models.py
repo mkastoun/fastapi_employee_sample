@@ -80,5 +80,5 @@ class PatientsList(BaseModel):
     """
     Response model for list of patients.
     """
-    data: List[PatientBase]
+    data: List[PatientDetails]
     meta: PaginationModel

@@ -1,0 +1,50 @@
+{
+  "initial_data": {
+    "doctor": {
+      "id": 1,
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "hiring_date": "1995-09-05",
+      "specialization": "GENERAL_INTERNAL_MEDICINE"
+    }
+  },
+  "case_create": {
+    "payload": {
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "hiring_date": "1995-09-05",
+      "specialization": "GENERAL_INTERNAL_MEDICINE"
+    },
+    "want": {
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "hiring_date": "1995-09-05",
+      "specialization": "GENERAL_INTERNAL_MEDICINE"
+    }
+  },
+  "case_get": {
+    "want": {
+      "id": 1,
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "hiring_date": "1995-09-05",
+      "specialization": "GENERAL_INTERNAL_MEDICINE"
+    }
+  },
+  "case_create_with_future_dob": {
+    "payload": {
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "hiring_date": "2025-09-05",
+      "specialization": "GENERAL_INTERNAL_MEDICINE"
+    }
+  },
+  "case_create_with_wrong_specialization": {
+    "payload": {
+      "first_name": "Tracy",
+      "last_name": "Edwards",
+      "hiring_date": "2025-09-05",
+      "specialization": "MECHANIC"
+    }
+  }
+}

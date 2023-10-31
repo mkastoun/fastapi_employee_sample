@@ -60,7 +60,7 @@ class DoctorsService:
                             "route",
                             "doctor_id"
                         ],
-                        "msg": "patient_id not found",
+                        "msg": "doctor_id not found",
                         "type": "value_error.doctor_id"
                     }
                 ]

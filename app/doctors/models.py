@@ -71,5 +71,5 @@ class DoctorCreate(DoctorBase):
 
 
 class DoctorsList(BaseModel):
-    data: List[DoctorBase]
+    data: List[DoctorDetails]
     meta: PaginationModel

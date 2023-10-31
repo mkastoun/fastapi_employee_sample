@@ -75,6 +75,7 @@ class PatientsService:
         )
 
         results = self.session.execute(statement=statement)
+
         patient = results.scalar_one_or_none()
 
         if patient is None:
