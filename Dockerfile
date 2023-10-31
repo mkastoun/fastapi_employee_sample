@@ -25,8 +25,8 @@ COPY pyproject.toml poetry.lock ./
 
 RUN poetry install -vvv --no-root
 
-COPY toubib toubib
-COPY tests tests
+COPY app app
+COPY db db
 
 RUN poetry install
 
@@ -39,15 +39,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends libpq5 \
 
 RUN mkdir /data
 VOLUME /data
-
 COPY --from=builder $VENV_PATH $VENV_PATH
-COPY toubib toubib
-COPY tests tests
+COPY app app
+COPY db db
 COPY setup.cfg setup.cfg
 COPY alembic.ini alembic.ini
+COPY pytest.ini pytest.ini
+COPY start.sh start.sh
+COPY .env .env
+COPY poetry.lock poetry.lock
+COPY pyproject.toml pyproject.toml
+
+COPY --from=builder $VENV_PATH $VENV_PATH
+COPY app app
+COPY db db
+COPY setup.cfg setup.cfg
+COPY alembic.ini alembic.ini
+COPY pytest.ini pytest.ini
 
 ENV PORT 8000
 ENV sqlalchemy_url sqlite:////data/db.sqlite?check_same_thread=false
 EXPOSE ${PORT}
 
-CMD exec hypercorn toubib.main:app --workers 1 --graceful-timeout 30 --bind 0.0.0.0:${PORT}
+# Start the application
+CMD ["./start.sh"]

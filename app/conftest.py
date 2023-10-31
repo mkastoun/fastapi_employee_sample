@@ -15,7 +15,7 @@ from unittest.mock import Mock
 @fixture(scope="session")
 def db_url():
     # https://stackoverflow.com/a/48234567
-    return "postgresql+psycopg2://toubib:toubibPass123@0.0.0.0:5433/toubibdb_test"
+    return os.getenv('DB_TEST_CONNECTION_STR')
 
 
 @fixture
@@ -64,6 +64,7 @@ def test_data() -> dict:
         data = json.load(file)
 
     return data
+
 
 @fixture
 def mocker():
