@@ -16,9 +16,9 @@ services:
     expose:
       - 5433:5432
     environment:
-      - POSTGRES_USER=toubib
-      - POSTGRES_PASSWORD=toubibPass123
-      - POSTGRES_DB=toubibdb
+      - POSTGRES_USER=sample
+      - POSTGRES_PASSWORD=samplePass123
+      - POSTGRES_DB=sampledb
 
   db_test:
     image: postgres:15-alpine
@@ -27,9 +27,9 @@ services:
     expose:
       - 5434:5432
     environment:
-      - POSTGRES_USER=toubib
-      - POSTGRES_PASSWORD=toubibPass123
-      - POSTGRES_DB=toubibdb_test
+      - POSTGRES_USER=sample
+      - POSTGRES_PASSWORD=samplePass123
+      - POSTGRES_DB=sampledb_test
 
 volumes:
   postgres_data:

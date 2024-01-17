@@ -1,14 +1,68 @@
-# [Toubib](https://en.wiktionary.org/wiki/toubib) API - Code Challenge
+# Employee management sample
 
-You are given a skeleton of an Electronic Medical Record API that returns json documents.
+The app built with FASTAPI and Postgres
 
-The app is a [FastAPI](https://fastapi.tiangolo.com/) app running against an sqlite DB.
+## Using Docker
+prerequisites
+* docker installed
+```commandline
+docker-compose up --build
+```
 
-You have to implement 3 functionalities:
+This command will do the following:
+* Install dependencies
+* Run the DB migrations
+* Run the test
 
-1. Create patient record;
-2. Get a patient record;
-3. List patient records alphabetically by last name and by pages of 10 records at a time;
+To re-run the test please follow these steps:
+
+#### 1. Go to the docker container
+```commandline
+docker-compose exec app bash
+```
+
+#### 2. Run the tests
+```commandline
+poetry run pytest
+```
+
+## Without docker
+prerequisites
+* python 3.10
+* Poetry
+* Postgres DB (if you don't have it, and you want to use partial docker run this command: docker run --name sample-pg -d -e POSTGRESQL_PASSWORD=samplePass123 -p 5432:5432 bitnami/postgresql:13)
+
+### 1. Prepare DB
+If you already have a postgres DB then you should do the following:
+* Create 2 databases, name them `sample_project` and `sample_project`
+* Set owner to these username `sampleMaster`
+
+### 2. Prepare APP
+* Copy the .env.example to .env
+* Update .env DB strings with your db credentials, and host
+
+### 3. Run the migrations
+```commandline
+poetry run alembic upgrade head
+```
+
+### 4. Run the tests
+```commandline
+poetry run pytest
+```
+
+### 5. Start the sample app
+```commandline
+uvicorn app.main:app --reload
+```
+
+## Test using postman
+On the root level there is a [Postman Collection](employee_test.postman_collection.json) imported to your postman,
+and start making calls, with different scenarios.
+
+## API Docs
+Access http://localhost:8000/docs to check the api documentation
+
 
 ## 1. Create patient record
 
@@ -17,10 +71,10 @@ patient):
 
 ```json
 {
-    "email": "tracy@edwards.com",
-    "first_name": "Tracy",
-    "last_name": "Edwards",
-    "date_of_birth": "1962-09-05",
+    "email": "hanna@hannouch.com",
+    "first_name": "hanna",
+    "last_name": "Hannouch",
+    "date_of_birth": "1993-09-05",
     "sex_at_birth": "FEMALE"
 }
 
@@ -32,10 +86,10 @@ Returns:
 {
     "data": {
         "id": 1,
-        "email": "tracy@edwards.com",
-        "first_name": "Tracy",
-        "last_name": "Edwards",
-        "date_of_birth": "1962-09-05",
+        "email": "hanna@hannouch.com",
+        "first_name": "hanna",
+        "last_name": "Hannouch",
+        "date_of_birth": "1993-09-05",
         "sex_at_birth": "FEMALE"
     }
 }
@@ -49,10 +103,10 @@ Returns:
 {
     "data": {
         "id": 1,
-        "email": "tracy@edwards.com",
-        "first_name": "Tracy",
-        "last_name": "Edwards",
-        "date_of_birth": "1962-09-05",
+         "email": "hanna@hannouch.com",
+        "first_name": "hanna",
+        "last_name": "Hannouch",
+        "date_of_birth": "1993-09-05",
         "sex_at_birth": "FEMALE"
     }
 }
@@ -67,18 +121,18 @@ Returns:
     "data": [
         {
             "id": 17,
-            "email": "mulatu@astatke",
-            "first_name": "Mulatu",
-            "last_name": "Astatke",
-            "date_of_birth": "1943-12-19",
-            "sex_at_birth": "MALE"
+            "email": "hanna1@hannouch.com",
+            "first_name": "hanna",
+            "last_name": "Hannouch",
+            "date_of_birth": "1993-09-05",
+            "sex_at_birth": "FEMALE"
         },
         {
             "id": 21,
-            "email": "tracy@edwards.com",
-            "first_name": "Tracy",
-            "last_name": "Edwards",
-            "date_of_birth": "1962-09-05",
+            "email": "hanna@hannouch.com",
+            "first_name": "hanna",
+            "last_name": "Hannouch",
+            "date_of_birth": "1993-09-05",
             "sex_at_birth": "FEMALE"
         }
     ],
@@ -96,56 +150,3 @@ Returns:
 
 You'll need python 3.10 and [poetry](https://python-poetry.org/).
 OR, you can use docker. A `Makefile` with all usefull commands is provided.
-
-### Install project
-
-```sh
-poetry install
-```
-
-### Run tests
-```sh
-make test
-```
-
-### Other commands available:
-
-```sh
-make test-watch  # run test in live reload
-make check       # linting
-make style       # code formatter
-...              # many more
-```
-
-
-
-### DB Migrations
-
-Migrations are managed with [Alembic](https://alembic.sqlalchemy.org/). Migrations
-scripts are located in `toubib/db/versions`.
-
-- To list migrations history:
-
-  ```sh
-  poetry run alembic history
-  ```
-
-- To upgrade to head:
-
-  ```sh
-  poetry run alembic upgrade head
-  ```
-
-- To downgrade to base:
-
-  ```sh
-  poetry run alembic downgrade base
-  ```
-
-## Evaluation
-
-Your submission will be evaluated according to three categories:
-
-1. **Developer Experience and Code Quality.**
-2. **Functionality.** Does this application implement the spec and run?
-3. **Tests and Testability.** Is the design testable? Is the core functionality tested?

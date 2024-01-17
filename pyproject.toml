@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "toubib"
+name = "sample"
 version = "0.1.0"
 description = "Simple EMR"
 authors = ["Hackers <hackers@dialogue.co>"]
